@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TillOrders.Domain.Data;
 using TillOrders.Domain.Model;
 
 namespace TillOrders.Services
 {
-    public  partial class OrderService:IOrderService
+    public enum OrderPaymentStatus { all, paid, notpaid }
+    public partial class OrderService : IOrderService
     {
         #region Fields
         private readonly IRepository<OrderItem> _orderItemRepo;
@@ -16,7 +15,7 @@ namespace TillOrders.Services
         #endregion
 
         #region Constructor
-        public OrderService(IRepository<Order>orderRepo,IRepository<OrderItem>orderItemRepo)
+        public OrderService(IRepository<Order> orderRepo, IRepository<OrderItem> orderItemRepo)
         {
             _orderItemRepo = orderItemRepo;
             _orderRepo = orderRepo;
@@ -31,7 +30,10 @@ namespace TillOrders.Services
 
         public virtual void DeleteOrder(Order order)
         {
-            throw new NotImplementedException();
+            if (order == null)
+                throw new ArgumentNullException(nameof(order));
+
+            _orderRepo.Delete(order);
         }
 
         public virtual void DeleteOrderItem(OrderItem orderItem)
@@ -42,14 +44,31 @@ namespace TillOrders.Services
             _orderItemRepo.Delete(orderItem);
         }
 
-        public virtual IList<Order> GetAll()
+        public virtual IList<Order> GetAll(OrderPaymentStatus status)
         {
-            return _orderRepo.TableNoTracking.ToList();
+            var OrdersQuery = _orderRepo.TableNoTracking;
+
+            switch (status)
+            {
+                case OrderPaymentStatus.paid:
+                    OrdersQuery = OrdersQuery.Where(o => o.IsPaid == true);
+                    break;
+
+                case OrderPaymentStatus.notpaid:
+                    OrdersQuery = OrdersQuery.Where(o => o.IsPaid == false);
+                    break;
+
+                default:
+                    break;
+            }
+
+            return OrdersQuery.ToList();
+
         }
 
-        public virtual IList<OrderItem> GetByOrderId(int id)
+        public virtual IList<OrderItem> GetOrderItemByOrderId(int orderId)
         {
-            throw new NotImplementedException();
+            return _orderItemRepo.Table.Where(o => o.OrderId == orderId).ToList();
         }
 
         public virtual Order GetOrderById(int id)
@@ -65,6 +84,7 @@ namespace TillOrders.Services
             if (order == null)
                 throw new ArgumentNullException(nameof(order));
 
+            order.IsPaid = false;
             _orderRepo.Insert(order);
         }
 
@@ -73,6 +93,15 @@ namespace TillOrders.Services
             if (order == null)
                 throw new ArgumentNullException(nameof(order));
 
+            _orderRepo.Update(order);
+        }
+
+        public void MarkAsPaid(Order order)
+        {
+            if (order == null)
+                throw new ArgumentNullException();
+
+            order.IsPaid = true;
             _orderRepo.Update(order);
         }
 

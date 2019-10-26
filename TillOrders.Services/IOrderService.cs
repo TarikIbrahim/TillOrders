@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using TillOrders.Domain.Model;
 
 namespace TillOrders.Services
@@ -10,18 +6,19 @@ namespace TillOrders.Services
     public partial interface IOrderService
     {
         #region Order
-        IList<Order> GetAll();
+        IList<Order> GetAll(OrderPaymentStatus status);
         Order GetOrderById(int id);
         void InsertOrder(Order order);
         void UpdateOrder(Order order);
         void DeleteOrder(Order order);
+        void MarkAsPaid(Order order);
         #endregion
 
         #region OrderItems
-        IList<OrderItem> GetByOrderId(int id);
+        IList<OrderItem> GetOrderItemByOrderId(int orderId);
         void CreateOrderItem(OrderItem orderItem);
         void DeleteOrderItem(OrderItem orderItem);
-        
+
         #endregion
 
     }
