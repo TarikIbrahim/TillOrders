@@ -8,7 +8,7 @@ namespace TillOrders.Data.Mapping
     {
         public override void Configure(EntityTypeBuilder<OrderItem> builder)
         {
-            builder.ToTable("OrderItem");
+            builder.ToTable("OrderItems");
             builder.HasKey(orderItem => orderItem.Id);
             builder.Property(attr => attr.Id).HasColumnName("OrderItemId");
 

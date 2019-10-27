@@ -9,7 +9,7 @@ using TillOrders.Domain;
 
 namespace TillOrders.Data
 {
-    public class TillOrdersObjectContext:DbContext, IDbContext
+    public class TillOrdersObjectContext : DbContext, IDbContext
     {
         #region Ctor
 
