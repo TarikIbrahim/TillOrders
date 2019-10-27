@@ -1,0 +1,197 @@
+{
+	"info": {
+		"_postman_id": "8a235ab2-5f4e-4e40-89cc-603b1bdf5e3b",
+		"name": "TillOrders",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Order",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"OrderName\":\"First Order\",\n\t\"Amount\":0,\n\t\"OrderItems\":[\n\t{\n\t\t\"ItemName\":\"Item3\",\n\t\t\"Price\":30,\n\t\t\"Quantity\":1\n\t},\n\t{\n\t\t\"ItemName\":\"Item4\",\n\t\t\"Price\":20,\n\t\t\"Quantity\":2\n\t}\n\t]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3761/api/v1/order/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3761",
+					"path": [
+						"api",
+						"v1",
+						"order",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Order Details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3761/api/v1/order/8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3761",
+					"path": [
+						"api",
+						"v1",
+						"order",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Confirm Order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3761/api/v1/order/confirm?orderId=6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3761",
+					"path": [
+						"api",
+						"v1",
+						"order",
+						"confirm"
+					],
+					"query": [
+						{
+							"key": "orderId",
+							"value": "6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Order Item",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3761/api/v1/order/6/items/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3761",
+					"path": [
+						"api",
+						"v1",
+						"order",
+						"6",
+						"items",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Order Items",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3761/api/v1/order/6/items",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3761",
+					"path": [
+						"api",
+						"v1",
+						"order",
+						"6",
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Orders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3761/api/v1/orders/all?status=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3761",
+					"path": [
+						"api",
+						"v1",
+						"orders",
+						"all"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "3",
+							"description": "1 all orders,2 paid orders,3 non-paid orders"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3761/api/v1/order/delete/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3761",
+					"path": [
+						"api",
+						"v1",
+						"order",
+						"delete",
+						"6"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
