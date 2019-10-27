@@ -6,7 +6,7 @@ using TillOrders.Domain.Model;
 
 namespace TillOrders.Services
 {
-    public enum OrderPaymentStatus { all, paid, notpaid }
+    public enum OrderPaymentStatus { all=1, paid=2, notpaid=3 }
     public partial class OrderService : IOrderService
     {
         #region Fields
@@ -64,7 +64,7 @@ namespace TillOrders.Services
                 default:
                     break;
             }
-
+            
             return OrdersQuery.ToList();
 
         }

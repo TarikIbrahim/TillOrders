@@ -15,6 +15,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TillOrders.Services", "Till
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TillOrders.WebApi", "TillOrders.WebApi\TillOrders.WebApi.csproj", "{79CBFA1C-8BC3-498D-AD25-B4B069257290}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{DD3F082F-9EB1-4EAC-ABC5-2308BF005147}"
+	ProjectSection(SolutionItems) = preProject
+		TillOrders.postman_collection.json = TillOrders.postman_collection.json
+		TillOrders_DataBase.sql = TillOrders_DataBase.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
