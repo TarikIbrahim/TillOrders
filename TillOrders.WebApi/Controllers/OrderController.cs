@@ -46,14 +46,7 @@ namespace TillOrders.WebApi.Controllers
             decimal orderAmount = orderitems.Sum(x => x.Price * x.Quantity);
             item.Amount = orderAmount;
             _orderService.InsertOrder(item);
-
-            orderitems.ForEach(x =>
-            {
-                x.OrderId = item.Id;
-                x.Order = item;
-                _orderService.CreateOrderItem(x);
-            });
-
+            
             return Task.FromResult(item.ToDto());
 
         }
