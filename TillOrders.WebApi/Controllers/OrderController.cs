@@ -13,7 +13,7 @@ namespace TillOrders.WebApi.Controllers
     [Route("api/v1/order")]
     public class OrderController : ControllerBase
     {
-       
+
         #region Fields
         private readonly IOrderService _orderService;
         #endregion
@@ -34,9 +34,8 @@ namespace TillOrders.WebApi.Controllers
 
         }
 
-        [HttpPost]
-        [ActionName("Create")]
-        public async Task<OkObjectResult> PlaceOrder(OrderDto order)
+        [HttpPost("create")]
+        public Task<OrderDto> PlaceOrder(OrderDto order)
         {
             if (order == null)
                 throw new NullReferenceException();
@@ -44,10 +43,18 @@ namespace TillOrders.WebApi.Controllers
             var item = order.ToEntity();
             var orderitems = order.OrderItems.Select(oi => oi.ToEntity()).ToList();
 
-            orderitems.ForEach(x => _orderService.CreateOrderItem(x));
+            decimal orderAmount = orderitems.Sum(x => x.Price * x.Quantity);
+            item.Amount = orderAmount;
             _orderService.InsertOrder(item);
 
-            return Ok(order);
+            orderitems.ForEach(x =>
+            {
+                x.OrderId = item.Id;
+                x.Order = item;
+                _orderService.CreateOrderItem(x);
+            });
+
+            return Task.FromResult(item.ToDto());
 
         }
     }

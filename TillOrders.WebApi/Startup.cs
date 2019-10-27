@@ -1,22 +1,17 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
-using TillOrders.Data;
-using System.Web.Http;
-using Autofac.Integration.WebApi;
-using Autofac;
-using TillOrders.WebApi.Infrastructure;
-using System.Reflection;
-using System.Collections.Generic;
-using System.Linq;
 using System;
-using Autofac.Extensions.DependencyInjection;
-using TillOrders.Services;
-using TillOrders.Domain.Model;
+using TillOrders.Data;
 using TillOrders.Domain.Data;
+using TillOrders.Domain.Model;
+using TillOrders.Services;
+using TillOrders.WebApi.MappingExtension;
 
 namespace TillOrders.WebApi
 {
@@ -28,7 +23,7 @@ namespace TillOrders.WebApi
         }
 
         public IConfiguration Configuration { get; }
-        
+
         public IContainer ApplicationContainer { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -37,14 +32,18 @@ namespace TillOrders.WebApi
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<TillOrdersObjectContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TillOrdersObjectContext")));
 
+            //GlobalConfiguration.Configure(WebApiConfig.Register);
+
+            Maps.CreateAllMappings();
             RegisterDependency(services);
 
             // Create the IServiceProvider based on the container.
             return new AutofacServiceProvider(this.ApplicationContainer);
         }
 
-        private void RegisterDependency(IServiceCollection services) {
-           
+        private void RegisterDependency(IServiceCollection services)
+        {
+
             var builder = new ContainerBuilder();
             builder.Populate(services);
 
@@ -56,6 +55,7 @@ namespace TillOrders.WebApi
 
             this.ApplicationContainer = builder.Build();
         }
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
@@ -65,7 +65,7 @@ namespace TillOrders.WebApi
             }
 
             app.UseMvc();
-            
-        } 
+
+        }
     }
 }
