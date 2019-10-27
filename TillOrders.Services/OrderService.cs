@@ -25,7 +25,10 @@ namespace TillOrders.Services
         #region Methods
         public virtual void CreateOrderItem(OrderItem orderItem)
         {
-            throw new NotImplementedException();
+            if (orderItem == null)
+                throw new ArgumentNullException(nameof(orderItem));
+
+            _orderItemRepo.Insert(orderItem);
         }
 
         public virtual void DeleteOrder(Order order)
