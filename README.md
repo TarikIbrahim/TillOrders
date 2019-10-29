@@ -36,4 +36,14 @@ Till Orders API supports Swagger by running **http://{HOST}/swagger.index.html**
 
 **Get orders**
 - Get /api/v1/orders/all?status={**status**}
+
 status is a numeric values ranges from 1-3 (e.g 1 to get all orders,2 get only paid orders and 3 to get only non-paid orders
+
+**Get order items**
+- POST /api/v1/order/{**orderId**}/items
+
+**Delete order item**
+- Delete /api/v1/order\/{*orderId*}\/items/{**orderItemId**}
+
+**Delete order**
+- Delete /api/v1/order/delete/{**{orderId}**}
