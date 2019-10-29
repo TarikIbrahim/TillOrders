@@ -6,11 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.IO;
+using System.Reflection;
 using TillOrders.Data;
 using TillOrders.Domain.Data;
 using TillOrders.Domain.Model;
 using TillOrders.Services;
+using TillOrders.WebApi.Controllers;
 using TillOrders.WebApi.MappingExtension;
 
 namespace TillOrders.WebApi
@@ -32,9 +37,19 @@ namespace TillOrders.WebApi
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<TillOrdersObjectContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TillOrdersObjectContext")));
 
-            //GlobalConfiguration.Configure(WebApiConfig.Register);
+            services.AddScoped<ILogger, Logger<OrderController>>();
 
-            Maps.CreateAllMappings();
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new Info { Title = "TillOrders-3s API", Version = "v1" });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                options.IncludeXmlComments(xmlPath);
+            });
+
+            Maps.CreateAllMappings();//Create entity to dto and vicse versa mappings
             RegisterDependency(services);
 
             // Create the IServiceProvider based on the container.
@@ -63,6 +78,15 @@ namespace TillOrders.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "TillOrders-3S API V1");
+            });
 
             app.UseMvc();
 

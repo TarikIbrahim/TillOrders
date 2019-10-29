@@ -19,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"OrderName\":\"First Order\",\n\t\"Amount\":0,\n\t\"OrderItems\":[\n\t{\n\t\t\"ItemName\":\"Item3\",\n\t\t\"Price\":30,\n\t\t\"Quantity\":1\n\t},\n\t{\n\t\t\"ItemName\":\"Item4\",\n\t\t\"Price\":20,\n\t\t\"Quantity\":2\n\t}\n\t]\n}",
+					"raw": "{\n\t\"OrderName\":\"Coco Dinner\",\n\t\"Amount\":0,\n\t\"OrderItems\":[\n\t{\n\t\t\"ItemName\":\"Item5\",\n\t\t\"Price\":20,\n\t\t\"Quantity\":4\n\t},\n\t{\n\t\t\"ItemName\":\"Item2\",\n\t\t\"Price\":15,\n\t\t\"Quantity\":12\n\t}\n\t]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -71,7 +71,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3761/api/v1/order/confirm?orderId=6",
+					"raw": "http://localhost:3761/api/v1/order/confirm?orderId=5",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -86,7 +86,7 @@
 					"query": [
 						{
 							"key": "orderId",
-							"value": "6"
+							"value": "5"
 						}
 					]
 				}
@@ -96,10 +96,10 @@
 		{
 			"name": "Delete Order Item",
 			"request": {
-				"method": "POST",
+				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3761/api/v1/order/6/items/6",
+					"raw": "http://localhost:3761/api/v1/order/8/items/9",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -109,9 +109,9 @@
 						"api",
 						"v1",
 						"order",
-						"6",
+						"8",
 						"items",
-						"6"
+						"9"
 					]
 				}
 			},
@@ -123,7 +123,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3761/api/v1/order/6/items",
+					"raw": "http://localhost:3761/api/v1/order/9/items",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -133,7 +133,7 @@
 						"api",
 						"v1",
 						"order",
-						"6",
+						"9",
 						"items"
 					]
 				}
@@ -146,7 +146,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3761/api/v1/orders/all?status=3",
+					"raw": "http://localhost:3761/api/v1/orders/all?status=1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -161,7 +161,7 @@
 					"query": [
 						{
 							"key": "status",
-							"value": "3",
+							"value": "1",
 							"description": "1 all orders,2 paid orders,3 non-paid orders"
 						}
 					]
@@ -172,10 +172,10 @@
 		{
 			"name": "Delete Order",
 			"request": {
-				"method": "POST",
+				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3761/api/v1/order/delete/6",
+					"raw": "http://localhost:3761/api/v1/order/delete/8",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -186,7 +186,7 @@
 						"v1",
 						"order",
 						"delete",
-						"6"
+						"8"
 					]
 				}
 			},

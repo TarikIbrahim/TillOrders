@@ -6,7 +6,7 @@ namespace TillOrders.WebApi.Dtos.Order
     {
         private ICollection<OrderItemDto> _orderItems;
 
-        public int id { get; set; }
+        public int OrderId { get; set; }
 
         public string OrderName { get; set; }
         public decimal Amount { get; set; }
