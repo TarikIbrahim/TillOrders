@@ -17,7 +17,7 @@ namespace TillOrders.Data
 
         #endregion
 
-        #region Ctor
+        #region Constructor
 
         public EfRepository(IDbContext context)
         {

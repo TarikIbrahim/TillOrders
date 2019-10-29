@@ -12,6 +12,7 @@ namespace TillOrders.Data.Mapping
             builder.HasKey(order => order.Id);
             builder.Property(attr => attr.Id).HasColumnName("OrderId");
 
+            //builder.HasMany(c => c.OrderItems).WithOne(c => c.Order);
             base.Configure(builder);
         }
     }

@@ -11,10 +11,11 @@ namespace TillOrders.Data
 {
     public class TillOrdersObjectContext : DbContext, IDbContext
     {
-        #region Ctor
+        #region Constructtor
 
         public TillOrdersObjectContext(DbContextOptions<TillOrdersObjectContext> options) : base(options)
         {
+            
         }
 
         #endregion
@@ -35,6 +36,7 @@ namespace TillOrders.Data
             foreach (var typeConfiguration in typeConfigurations)
             {
                 var configuration = (IMappingConfiguration)Activator.CreateInstance(typeConfiguration);
+
                 configuration.ApplyConfiguration(modelBuilder);
             }
 
