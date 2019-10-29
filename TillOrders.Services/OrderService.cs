@@ -78,8 +78,10 @@ namespace TillOrders.Services
         {
             if (id == 0)
                 return null;
-
-            return _orderRepo.GetById(id);
+            
+            var mOrder = _orderRepo.GetById(id);
+            mOrder.OrderItems.ToList().AddRange(_orderItemRepo.Table.Where(o => o.OrderId == id));
+            return mOrder;
         }
 
         public virtual void InsertOrder(Order order)
